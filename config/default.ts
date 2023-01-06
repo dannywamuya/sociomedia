@@ -9,4 +9,5 @@ export default {
     pass: "WjXbbX7Q374TZcQpKj",
     secure: false,
   },
+  fromEmail: "nodejsauthapi@app.com",
 };

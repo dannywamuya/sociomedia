@@ -1,7 +1,20 @@
 import { Request, Response } from "express";
-import { CreateUserInput, VerifyUserInput } from "../schemas/user.schema";
-import { createUser, findUserById } from "../services/user.service";
+import {
+  CreateUserInput,
+  ForgotPasswordInput,
+  VerifyUserInput,
+} from "../schemas/user.schema";
+import {
+  createUser,
+  findUserByEmail,
+  findUserById,
+} from "../services/user.service";
+import logger from "../utils/logger";
 import sendEmail from "../utils/mailer";
+import { nanoid } from "nanoid";
+import config from "config";
+
+const fromEmail = config.get<string>("fromEmail");
 
 export const creatUserHandler = async (
   req: Request<{}, {}, CreateUserInput["body"]>,
@@ -10,7 +23,7 @@ export const creatUserHandler = async (
   try {
     const user = await createUser(req.body);
     await sendEmail({
-      from: "dannytestsmtp@gmail.com",
+      from: fromEmail,
       to: user.email,
       subject: "Please verify your account.",
       text: `Verification Code: ${user.verificationCode}, ID: ${
@@ -32,12 +45,11 @@ export const verifyUserHandler = async (
   req: Request<VerifyUserInput["params"]>,
   res: Response
 ) => {
-  const id = req.params.id;
-  const verificationCode = req.params.verificationCode;
+  const { id, verificationCode } = req.params;
 
   // Find User by Id
   const user = await findUserById(id);
-  if (!user) return res.status(404).send("This user does not exist.");
+  if (!user) return res.send("Could not verify user.");
 
   // Check if user is verified
   if (user.verified) return res.send("User is already verified.");
@@ -51,4 +63,41 @@ export const verifyUserHandler = async (
   }
 
   return res.send("Could not verify user.");
+};
+
+export const forgotPasswordHandler = async (
+  req: Request<{}, {}, ForgotPasswordInput["body"]>,
+  res: Response
+) => {
+  const msg =
+    "If a user with that email is verified, they will receive a password reset email.";
+
+  const { email } = req.body;
+  const user = await findUserByEmail(email);
+
+  if (!user) {
+    logger.debug(`User with email ${email} does not exist`);
+    return res.send(msg);
+  }
+
+  if (!user.verified) {
+    return res.send("User is not verified");
+  }
+
+  const passwordResetCode = nanoid();
+
+  user.passwordResetCode = passwordResetCode;
+
+  await user.save();
+
+  await sendEmail({
+    from: fromEmail,
+    to: user.email,
+    subject: "Reset your password.",
+    text: `Password Reset Code: ${passwordResetCode}, ID: ${(user as any)._id}`,
+  });
+
+  logger.debug(`Password reset email sent to ${user.email}`);
+
+  return res.send(msg);
 };

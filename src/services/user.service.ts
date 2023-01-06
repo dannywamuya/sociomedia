@@ -13,3 +13,7 @@ export const createUser = async (input: Partial<IUser>) => {
 export const findUserById = async (id: string) => {
   return await UserModel.findById(id);
 };
+
+export const findUserByEmail = async (email: string) => {
+  return await UserModel.findOne({ email });
+};
