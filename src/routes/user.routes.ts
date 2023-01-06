@@ -2,6 +2,7 @@ import express from "express";
 import {
   creatUserHandler,
   forgotPasswordHandler,
+  getCurrentUserHandler,
   resetPasswordHandler,
   verifyUserHandler,
 } from "../controllers/user.controller";
@@ -42,5 +43,7 @@ userRoutes.post(
   validateResource(resetPasswordSchema),
   resetPasswordHandler
 );
+
+userRoutes.get("/api/users/me", getCurrentUserHandler);
 
 export default userRoutes;
