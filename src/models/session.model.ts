@@ -14,7 +14,7 @@ const sessionSchema = new mongoose.Schema(
       type: mongoose.SchemaTypes.ObjectId,
       ref: "User",
     },
-    valid: { type: Boolean },
+    valid: { type: Boolean, default: true },
   },
   { timestamps: true }
 );
