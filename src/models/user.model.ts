@@ -10,7 +10,7 @@ export interface IUser {
   fullName: string;
   password: string;
   verificationCode: string;
-  passwordResetCode: string;
+  passwordResetCode: string | null;
   verified: boolean;
   createdAt: Date;
   updatedAt: Date;

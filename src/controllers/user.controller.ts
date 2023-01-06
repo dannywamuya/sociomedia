@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import {
   CreateUserInput,
   ForgotPasswordInput,
+  ResetPasswordInput,
   VerifyUserInput,
 } from "../schemas/user.schema";
 import {
@@ -100,4 +101,30 @@ export const forgotPasswordHandler = async (
   logger.debug(`Password reset email sent to ${user.email}`);
 
   return res.send(msg);
+};
+
+export const resetPasswordHandler = async (
+  req: Request<ResetPasswordInput["params"], {}, ResetPasswordInput["body"]>,
+  res: Response
+) => {
+  const { id, passwordResetCode } = req.params;
+  const { password } = req.body;
+
+  const user = await findUserById(id);
+
+  if (
+    !user ||
+    !user.passwordResetCode ||
+    user.passwordResetCode !== passwordResetCode
+  ) {
+    return res.status(400).send("Could not reset password.");
+  }
+
+  user.passwordResetCode = null;
+
+  user.password = password;
+
+  await user.save();
+
+  return res.send("Successfully reset password.");
 };
