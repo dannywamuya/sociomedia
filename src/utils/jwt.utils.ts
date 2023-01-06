@@ -21,15 +21,17 @@ export const signJwt = (
   });
 };
 
-export const verifyJwt = (token: string, keyName: PublicKeyName) => {
+export const verifyJwt = <T>(
+  token: string,
+  keyName: PublicKeyName
+): T | null => {
   const signingKey = Buffer.from(
     config.get<string>(keyName),
     "base64"
   ).toString("ascii");
 
   try {
-    const decoded = jwt.verify(token, signingKey);
-    return decoded;
+    return jwt.verify(token, signingKey) as T;
   } catch (e: any) {
     logger.error(e.message);
     return null;
