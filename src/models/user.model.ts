@@ -3,6 +3,14 @@ import { nanoid } from "nanoid";
 import bcrypt from "bcrypt";
 import config from "config";
 
+export const privateUserFields = [
+  "password",
+  "passwordResetCode",
+  "verificationCode",
+  "__v",
+  "verified",
+];
+
 export interface IUser {
   email: string;
   firstName: string;

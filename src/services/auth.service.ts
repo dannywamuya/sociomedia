@@ -1,7 +1,8 @@
 import { SignOptions } from "jsonwebtoken";
+import { omit } from "lodash";
 import { Document, Types } from "mongoose";
 import SessionModel from "../models/session.model";
-import { IUser } from "../models/user.model";
+import { IUser, privateUserFields } from "../models/user.model";
 import { signJwt } from "../utils/jwt.utils";
 
 export const createSession = async (userId: Types.ObjectId) => {
@@ -15,7 +16,7 @@ export const signAccessToken = (
     },
   options?: SignOptions
 ) => {
-  const payload = user.toJSON();
+  const payload = omit(user.toJSON(), privateUserFields);
   const accessToken = signJwt(payload, "accessTokenPrivateKey", options);
 
   return accessToken;
