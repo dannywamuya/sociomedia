@@ -9,3 +9,7 @@ export const createUser = async (input: Partial<IUser>) => {
     throw new Error(e);
   }
 };
+
+export const findUserById = async (id: string) => {
+  return await UserModel.findById(id);
+};
