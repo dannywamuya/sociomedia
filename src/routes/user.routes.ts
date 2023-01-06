@@ -6,6 +6,7 @@ import {
   resetPasswordHandler,
   verifyUserHandler,
 } from "../controllers/user.controller";
+import requireUser from "../middleware/requireUser";
 import validateResource from "../middleware/validateResource";
 import {
   createUserSchema,
@@ -44,6 +45,7 @@ userRoutes.post(
   resetPasswordHandler
 );
 
-userRoutes.get("/api/users/me", getCurrentUserHandler);
+// Get current user
+userRoutes.get("/api/users/me", requireUser, getCurrentUserHandler);
 
 export default userRoutes;
