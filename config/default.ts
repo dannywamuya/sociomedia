@@ -12,4 +12,6 @@ export default {
   fromEmail: "nodejsauthapi@app.com",
   accessTokenPrivateKey: "",
   refreshTokenPrivateKey: "",
+  accessTokenTtl: "15m",
+  refreshTokenTtl: "1y",
 };
