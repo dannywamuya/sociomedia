@@ -10,4 +10,6 @@ export default {
     secure: false,
   },
   fromEmail: "nodejsauthapi@app.com",
+  accessTokenPrivateKey: "",
+  refreshTokenPrivateKey: "",
 };
