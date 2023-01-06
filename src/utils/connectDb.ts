@@ -6,7 +6,7 @@ const dbUri = config.get<string>("dbUri");
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(dbUri);
+    await mongoose.connect(dbUri, { autoIndex: false });
     logger.info("Connected to DB");
   } catch (e) {
     logger.error(e);
