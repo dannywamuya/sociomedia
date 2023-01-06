@@ -30,8 +30,8 @@ export const verifyJwt = (token: string, keyName: PublicKeyName) => {
   try {
     const decoded = jwt.verify(token, signingKey);
     return decoded;
-  } catch (e) {
-    logger.error(e);
+  } catch (e: any) {
+    logger.error(e.message);
     return null;
   }
 };
