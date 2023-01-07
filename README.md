@@ -39,6 +39,6 @@ yarn add express@5
 
 ### Install dependencies
 
-yarn add mongoose @typegoose/typegoose config argon2 pino dayjs nanoid nodemailer lodash jsonwebtoken dotenv zod
+yarn add mongoose @typegoose/typegoose config argon2 pino dayjs nanoid@3.0.0 nodemailer lodash jsonwebtoken dotenv zod
 
 Generate new Base64 Encoded keys for your access and refresh token private and public keys.
