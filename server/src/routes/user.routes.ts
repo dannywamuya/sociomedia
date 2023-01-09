@@ -5,6 +5,7 @@ import {
   forgotPasswordHandler,
   getCurrentUserHandler,
   getUser,
+  getUserFriendsHandler,
   resetPasswordHandler,
   verifyUserHandler,
 } from "../controllers/user.controller";
@@ -52,5 +53,7 @@ userRoutes.get("/:id", validateResource(getUserSchema), requireUser, getUser);
 
 // Add or Remove Friend
 userRoutes.patch("/:id/addRemoveFriend", requireUser, addRemoveFriend);
+
+userRoutes.get("/:id/followers", requireUser, getUserFriendsHandler);
 
 export default userRoutes;

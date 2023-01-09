@@ -11,6 +11,7 @@ import {
   createUser,
   findUserByEmail,
   findUserById,
+  getUserFriends,
 } from "../services/user.service";
 import logger from "../utils/logger";
 import sendEmail from "../utils/mailer";
@@ -157,4 +158,16 @@ export const addRemoveFriend = async (
   if (!status) return res.status(404).send("Could not find user.");
 
   return res.send(status);
+};
+
+export const getUserFriendsHandler = async (
+  req: Request<GetUserInput["params"]>,
+  res: Response
+) => {
+  const { id } = req.params;
+  const friends = await getUserFriends(id);
+
+  if (!friends) return res.status(404).send("Could not find user.");
+
+  return res.send(friends);
 };

@@ -54,3 +54,11 @@ export const followUnfollowUser = async (id: string, self: string) => {
     return undefined;
   }
 };
+
+export const getUserFriends = async (id: string) => {
+  const user = await UserModel.findById(id);
+
+  if (!user) return false;
+
+  return user.friends;
+};
