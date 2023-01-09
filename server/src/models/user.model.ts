@@ -2,6 +2,8 @@ import mongoose from "mongoose";
 import { nanoid } from "nanoid";
 import bcrypt from "bcrypt";
 import config from "config";
+import { IImage } from "./image.model";
+import { IFriend } from "./friend.model";
 
 export const privateUserFields = [
   "password",
@@ -17,6 +19,12 @@ export interface IUser {
   lastName: string;
   fullName: string;
   password: string;
+  friends: IFriend[];
+  picturePath: IImage;
+  occupation: string;
+  location: string;
+  profileViews: number;
+  impressions: number;
   verificationCode: string;
   passwordResetCode: string | null;
   verified: boolean;
@@ -58,6 +66,12 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    profileViews: { type: Number },
+    impressions: { type: Number },
+    friends: { type: Array.of(mongoose.SchemaTypes.Subdocument) },
+    picturePath: { type: mongoose.SchemaTypes.ObjectId, ref: "Image" },
+    occupation: { type: String },
+    location: { type: String },
   },
   {
     timestamps: true,
