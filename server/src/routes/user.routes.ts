@@ -13,6 +13,7 @@ import validateResource from "../middleware/validateResource";
 import {
   createUserSchema,
   forgotPasswordSchema,
+  getUserSchema,
   resetPasswordSchema,
   verifyUserSchema,
 } from "../schemas/user.schema";
@@ -47,7 +48,7 @@ userRoutes.post(
 userRoutes.get("/me", requireUser, getCurrentUserHandler);
 
 // Get User
-userRoutes.get("/:id", requireUser, getUser);
+userRoutes.get("/:id", validateResource(getUserSchema), requireUser, getUser);
 
 // Add or Remove Friend
 userRoutes.patch("/:id/addRemoveFriend", requireUser, addRemoveFriend);
