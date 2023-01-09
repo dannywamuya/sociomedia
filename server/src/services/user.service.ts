@@ -1,5 +1,9 @@
 import { omit } from "lodash";
-import UserModel, { IUser } from "../models/user.model";
+import UserModel, { IUser, privateUserFields } from "../models/user.model";
+
+interface IFindUserOptions {
+  hidePrivateFields?: boolean;
+}
 
 export const createUser = async (input: Partial<IUser>) => {
   try {
@@ -10,7 +14,16 @@ export const createUser = async (input: Partial<IUser>) => {
   }
 };
 
-export const findUserById = async (id: string) => {
+export const findUserById = async (id: string, options?: IFindUserOptions) => {
+  if (options) {
+    const { hidePrivateFields } = options;
+    if (hidePrivateFields) {
+      return await UserModel.findById(
+        id,
+        privateUserFields.map((v) => `-${v}`)
+      );
+    }
+  }
   return await UserModel.findById(id);
 };
 

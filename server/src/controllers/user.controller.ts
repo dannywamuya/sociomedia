@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import {
   CreateUserInput,
   ForgotPasswordInput,
+  GetUserInput,
   ResetPasswordInput,
   VerifyUserInput,
 } from "../schemas/user.schema";
@@ -131,4 +132,16 @@ export const resetPasswordHandler = async (
 
 export const getCurrentUserHandler = (req: Request, res: Response) => {
   return res.send(res.locals.user);
+};
+
+export const getUser = async (
+  req: Request<GetUserInput["params"]>,
+  res: Response
+) => {
+  const { id } = req.params;
+  const user = await findUserById(id, { hidePrivateFields: true });
+
+  if (!user) res.status(404).send("Could not find user.");
+
+  return res.send(user);
 };

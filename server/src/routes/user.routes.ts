@@ -3,6 +3,7 @@ import {
   creatUserHandler,
   forgotPasswordHandler,
   getCurrentUserHandler,
+  getUser,
   resetPasswordHandler,
   verifyUserHandler,
 } from "../controllers/user.controller";
@@ -43,5 +44,8 @@ userRoutes.post(
 
 // Get current user
 userRoutes.get("/me", requireUser, getCurrentUserHandler);
+
+// Get User
+userRoutes.get("/:id", requireUser, getUser);
 
 export default userRoutes;

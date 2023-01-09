@@ -64,6 +64,14 @@ export const resetPasswordSchema = object({
   }),
 });
 
+export const getUserSchema = object({
+  params: object({
+    id: string({
+      required_error: "User ID is required",
+    }),
+  }),
+});
+
 export type CreateUserInput = TypeOf<typeof createUserSchema>;
 
 export type VerifyUserInput = TypeOf<typeof verifyUserSchema>;
@@ -71,3 +79,5 @@ export type VerifyUserInput = TypeOf<typeof verifyUserSchema>;
 export type ForgotPasswordInput = TypeOf<typeof forgotPasswordSchema>;
 
 export type ResetPasswordInput = TypeOf<typeof resetPasswordSchema>;
+
+export type GetUserInput = TypeOf<typeof getUserSchema>;
