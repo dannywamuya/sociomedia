@@ -6,7 +6,7 @@ import { createSessionSchema } from "../schemas/auth.schema";
 const authRoutes = express.Router();
 
 authRoutes.post(
-  "/api/login",
+  "/login",
   validateResource(createSessionSchema),
   createSessionHandler
 );

@@ -8,7 +8,7 @@ router.get("/api/health", (_, res) => {
   return res.sendStatus(200);
 });
 
-router.use(userRoutes);
-router.use(authRoutes);
+router.use("/users", userRoutes);
+router.use("/auth", authRoutes);
 
 export default router;

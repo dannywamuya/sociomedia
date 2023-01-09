@@ -18,34 +18,30 @@ import {
 const userRoutes = express.Router();
 
 // Create User
-userRoutes.post(
-  "/api/users",
-  validateResource(createUserSchema),
-  creatUserHandler
-);
+userRoutes.post("/", validateResource(createUserSchema), creatUserHandler);
 
 // Verify User
 userRoutes.post(
-  "/api/users/verify/:id/:verificationCode",
+  "/verify/:id/:verificationCode",
   validateResource(verifyUserSchema),
   verifyUserHandler
 );
 
 // Request Password Reset Code
 userRoutes.post(
-  "/api/users/forgotPassword",
+  "/forgotPassword",
   validateResource(forgotPasswordSchema),
   forgotPasswordHandler
 );
 
 // Reset Password
 userRoutes.post(
-  "/api/users/resetPassword/:id/:passwordResetCode",
+  "/resetPassword/:id/:passwordResetCode",
   validateResource(resetPasswordSchema),
   resetPasswordHandler
 );
 
 // Get current user
-userRoutes.get("/api/users/me", requireUser, getCurrentUserHandler);
+userRoutes.get("/me", requireUser, getCurrentUserHandler);
 
 export default userRoutes;
