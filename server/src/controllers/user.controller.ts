@@ -154,6 +154,7 @@ export const addRemoveFriend = async (
   const { id } = req.params;
   const status = await followUnfollowUser(id, res.locals.user._id);
 
-  if (!status) return res.status(400).send("User was not found");
-  else return res.send(status);
+  if (!status) return res.status(404).send("Could not find user.");
+
+  return res.send(status);
 };
