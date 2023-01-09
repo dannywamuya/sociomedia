@@ -49,7 +49,7 @@ userRoutes.get("/me", requireUser, getCurrentUserHandler);
 // Get User
 userRoutes.get("/:id", requireUser, getUser);
 
-// Add Friend
-userRoutes.post("/:id/addRemoveFriend", requireUser, addRemoveFriend);
+// Add or Remove Friend
+userRoutes.patch("/:id/addRemoveFriend", requireUser, addRemoveFriend);
 
 export default userRoutes;
