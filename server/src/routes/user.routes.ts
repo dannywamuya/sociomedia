@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  addRemoveFriend,
   creatUserHandler,
   forgotPasswordHandler,
   getCurrentUserHandler,
@@ -47,5 +48,8 @@ userRoutes.get("/me", requireUser, getCurrentUserHandler);
 
 // Get User
 userRoutes.get("/:id", requireUser, getUser);
+
+// Add Friend
+userRoutes.post("/:id/addRemoveFriend", requireUser, addRemoveFriend);
 
 export default userRoutes;

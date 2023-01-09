@@ -3,7 +3,7 @@ import { nanoid } from "nanoid";
 import bcrypt from "bcrypt";
 import config from "config";
 import { IImage } from "./image.model";
-import { IFriend } from "./friend.model";
+import { friendSchema, IFriend } from "./friend.model";
 
 export const privateUserFields = [
   "password",
@@ -68,7 +68,7 @@ const userSchema = new mongoose.Schema(
     },
     profileViews: { type: Number },
     impressions: { type: Number },
-    friends: { type: Array.of(mongoose.SchemaTypes.Subdocument) },
+    friends: { type: [friendSchema], ref: "User" },
     picturePath: { type: mongoose.SchemaTypes.ObjectId, ref: "Image" },
     occupation: { type: String },
     location: { type: String },

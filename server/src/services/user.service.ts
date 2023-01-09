@@ -30,3 +30,27 @@ export const findUserById = async (id: string, options?: IFindUserOptions) => {
 export const findUserByEmail = async (email: string) => {
   return await UserModel.findOne({ email });
 };
+
+export const followUnfollowUser = async (id: string, self: string) => {
+  const user1 = await UserModel.findById(id);
+  const user2 = await UserModel.findById(self);
+
+  if (user1 && user2) {
+    const user1Followers = user1.friends.map((v) => String((v as any)._id));
+    const follows = !!user1Followers.find((v) => v === self);
+
+    if (!follows) {
+      user1.friends.push(user2);
+      user1.save();
+      return "Followed";
+    } else {
+      user1.friends = user1.friends.filter(
+        (v) => String((v as any)._id) !== self
+      );
+      user1.save();
+      return "Unfollowed";
+    }
+  } else {
+    return undefined;
+  }
+};

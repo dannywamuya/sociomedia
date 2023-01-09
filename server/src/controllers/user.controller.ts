@@ -7,6 +7,7 @@ import {
   VerifyUserInput,
 } from "../schemas/user.schema";
 import {
+  followUnfollowUser,
   createUser,
   findUserByEmail,
   findUserById,
@@ -144,4 +145,15 @@ export const getUser = async (
   if (!user) res.status(404).send("Could not find user.");
 
   return res.send(user);
+};
+
+export const addRemoveFriend = async (
+  req: Request<GetUserInput["params"]>,
+  res: Response
+) => {
+  const { id } = req.params;
+  const status = await followUnfollowUser(id, res.locals.user._id);
+
+  if (!status) return res.status(400).send("User was not found");
+  else return res.send(status);
 };
