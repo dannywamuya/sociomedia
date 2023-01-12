@@ -15,6 +15,7 @@ export interface IPost {
   picturePaths: string[];
   likes: string[];
   comments: IComment[];
+  archived: boolean;
 }
 
 const postSchema = new mongoose.Schema({
@@ -51,6 +52,10 @@ const postSchema = new mongoose.Schema({
   },
   comments: {
     type: mongoose.SchemaTypes.Array,
+  },
+  archived: {
+    type: Boolean,
+    default: false,
   },
 });
 
