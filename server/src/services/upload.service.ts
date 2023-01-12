@@ -37,15 +37,17 @@ export const uploadProfilePictureSVC = async (
           `https://storage.googleapis.com/${bucket.name}/${blob.name}`
         ).toString();
 
+        const msg = "Uploaded profile picture successfully";
+
         try {
           // Make the file public
           await bucket.file(fileName).makePublic();
           result.status = 200;
-          result.message = `Uploaded the file successfully: ${file.originalname}`;
+          result.message = `${msg}: ${file.originalname}`;
           resolve(result);
         } catch (e) {
           result.status = 500;
-          result.message = `Uploaded the file successfully: ${file.originalname}, but public access is denied!`;
+          result.message = `${msg}: ${file.originalname}, but public access is denied!`;
           reject(result);
         }
 
@@ -62,7 +64,7 @@ export const uploadProfilePictureSVC = async (
     });
   } catch (err) {
     result.status = 500;
-    result.message = `Could not upload the file: ${file.originalname}. ${err}`;
+    result.message = `Could not upload profile picture: ${file.originalname}. ${err}`;
     return Promise.reject(result);
   }
 };
