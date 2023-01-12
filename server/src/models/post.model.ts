@@ -1,5 +1,10 @@
 import mongoose from "mongoose";
 
+interface IComment {
+  userId: string;
+  text: string;
+}
+
 export interface IPost {
   userId: string;
   firstName: string;
@@ -9,7 +14,7 @@ export interface IPost {
   userPicturePath: string;
   picturePaths: string[];
   likes: string[];
-  comments: string[];
+  comments: IComment[];
 }
 
 const postSchema = new mongoose.Schema({
