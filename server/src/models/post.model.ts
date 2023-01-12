@@ -7,7 +7,7 @@ export interface IPost {
   description: string;
   location: string;
   userPicturePath: string;
-  picturePath: string;
+  picturePaths: string[];
   likes: string[];
   comments: string[];
 }
@@ -36,8 +36,8 @@ const postSchema = new mongoose.Schema({
     type: mongoose.SchemaTypes.ObjectId,
     ref: "Image",
   },
-  picturePath: {
-    type: mongoose.SchemaTypes.ObjectId,
+  picturePaths: {
+    type: [mongoose.SchemaTypes.ObjectId],
     ref: "Image",
   },
   likes: {
@@ -46,6 +46,13 @@ const postSchema = new mongoose.Schema({
   comments: {
     type: mongoose.SchemaTypes.Array,
   },
+});
+
+postSchema.pre("save", function (next) {
+  if (this.picturePaths.length > 10) {
+    return next(new Error("Too many images per post, maximum is 10"));
+  }
+  next();
 });
 
 const PostModel = mongoose.model<IPost>("Post", postSchema);
