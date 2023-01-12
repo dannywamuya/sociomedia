@@ -184,7 +184,9 @@ export const uploadProfilePictureHandler = async (
     return res.status(400).send({ message: "Please upload a file!" });
   }
 
-  const { message, url, status } = await uploadProfilePictureSVC(file);
+  const { _id } = res.locals.user;
+
+  const { message, url, status } = await uploadProfilePictureSVC(file, _id);
 
   return res.status(status).send({ message, url });
 };

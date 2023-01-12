@@ -62,3 +62,18 @@ export const getUserFriends = async (id: string) => {
 
   return user.friends;
 };
+
+export const updateProfilePicture = async (
+  userId: string,
+  imagePath: string
+) => {
+  const user = await UserModel.findById(userId);
+
+  if (!user) return false;
+
+  user.picturePath = new URL(imagePath).toString();
+
+  user.save();
+
+  return true;
+};
