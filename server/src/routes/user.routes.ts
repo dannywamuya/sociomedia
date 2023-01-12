@@ -10,6 +10,7 @@ import {
   uploadProfilePictureHandler,
   verifyUserHandler,
 } from "../controllers/user.controller";
+import { uploadProfilePictureMiddleWare } from "../middleware/fileUpload";
 import requireUser from "../middleware/requireUser";
 import validateResource from "../middleware/validateResource";
 import {
@@ -19,7 +20,6 @@ import {
   resetPasswordSchema,
   verifyUserSchema,
 } from "../schemas/user.schema";
-import { uploadSingleFileMiddleWare } from "../utils/upload";
 
 const userRoutes = express.Router();
 
@@ -63,7 +63,7 @@ userRoutes.get("/:id/followers", requireUser, getUserFriendsHandler);
 userRoutes.post(
   "/uploadProfilePicture",
   requireUser,
-  uploadSingleFileMiddleWare,
+  uploadProfilePictureMiddleWare,
   uploadProfilePictureHandler
 );
 
