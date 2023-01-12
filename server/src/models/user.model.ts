@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 import { nanoid } from "nanoid";
 import bcrypt from "bcrypt";
 import config from "config";
-import { IImage } from "./image.model";
 import { friendSchema, IFriend } from "./friend.model";
 
 export const privateUserFields = [
