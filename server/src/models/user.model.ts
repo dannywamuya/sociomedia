@@ -20,7 +20,7 @@ export interface IUser {
   fullName: string;
   password: string;
   friends: IFriend[];
-  picturePath: IImage;
+  picturePath: string;
   occupation: string;
   location: string;
   profileViews: number;
@@ -69,7 +69,7 @@ const userSchema = new mongoose.Schema(
     profileViews: { type: Number },
     impressions: { type: Number },
     friends: { type: [friendSchema], ref: "User" },
-    picturePath: { type: mongoose.SchemaTypes.ObjectId, ref: "Image" },
+    picturePath: { type: String },
     occupation: { type: String },
     location: { type: String },
   },

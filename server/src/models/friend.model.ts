@@ -5,7 +5,7 @@ export interface IFriend {
   firstName: string;
   lastName: string;
   fullName: string;
-  picturePath: IImage;
+  picturePath: string;
   occupation: string;
   location: string;
 }
@@ -19,7 +19,7 @@ export const friendSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  picturePath: { type: mongoose.SchemaTypes.ObjectId, ref: "Image" },
+  picturePath: { type: String },
   occupation: { type: String },
   location: { type: String },
 });
