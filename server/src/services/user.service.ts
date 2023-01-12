@@ -1,4 +1,5 @@
 import { omit } from "lodash";
+import ImageModel from "../models/image.model";
 import UserModel, { IUser, privateUserFields } from "../models/user.model";
 
 interface IFindUserOptions {
@@ -71,6 +72,7 @@ export const updateProfilePicture = async (
 
   if (!user) return false;
 
+  await ImageModel.create({ path: imagePath, wasProfilePicture: true });
   user.picturePath = new URL(imagePath).toString();
 
   user.save();
