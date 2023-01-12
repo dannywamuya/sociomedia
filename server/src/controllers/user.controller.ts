@@ -17,6 +17,7 @@ import logger from "../utils/logger";
 import sendEmail from "../utils/mailer";
 import { nanoid } from "nanoid";
 import config from "config";
+import { uploadProfilePictureSVC } from "../services/upload.service";
 
 const fromEmail = config.get<string>("fromEmail");
 
@@ -170,4 +171,20 @@ export const getUserFriendsHandler = async (
   if (!friends) return res.status(404).send("Could not find user.");
 
   return res.send(friends);
+};
+
+export const uploadProfilePictureHandler = async (
+  req: Request,
+  res: Response
+) => {
+  // Get file from request object
+  const file: Express.Multer.File | undefined = req?.file;
+
+  if (!file) {
+    return res.status(400).send({ message: "Please upload a file!" });
+  }
+
+  const { message, url, status } = await uploadProfilePictureSVC(file);
+
+  return res.status(status).send({ message, url });
 };

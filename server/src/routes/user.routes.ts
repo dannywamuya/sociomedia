@@ -7,6 +7,7 @@ import {
   getUser,
   getUserFriendsHandler,
   resetPasswordHandler,
+  uploadProfilePictureHandler,
   verifyUserHandler,
 } from "../controllers/user.controller";
 import requireUser from "../middleware/requireUser";
@@ -18,6 +19,7 @@ import {
   resetPasswordSchema,
   verifyUserSchema,
 } from "../schemas/user.schema";
+import { uploadSingleFileMiddleWare } from "../utils/upload";
 
 const userRoutes = express.Router();
 
@@ -54,6 +56,15 @@ userRoutes.get("/:id", validateResource(getUserSchema), requireUser, getUser);
 // Add or Remove Friend
 userRoutes.patch("/:id/addRemoveFriend", requireUser, addRemoveFriend);
 
+// Get user's followers
 userRoutes.get("/:id/followers", requireUser, getUserFriendsHandler);
+
+// Upload profile picture
+userRoutes.post(
+  "/uploadProfilePicture",
+  requireUser,
+  uploadSingleFileMiddleWare,
+  uploadProfilePictureHandler
+);
 
 export default userRoutes;
