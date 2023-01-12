@@ -41,7 +41,8 @@ const postSchema = new mongoose.Schema({
     ref: "Image",
   },
   likes: {
-    type: mongoose.SchemaTypes.Array,
+    type: [mongoose.SchemaTypes.Array],
+    ref: "User",
   },
   comments: {
     type: mongoose.SchemaTypes.Array,
