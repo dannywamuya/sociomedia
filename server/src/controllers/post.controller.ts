@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { IPostImages, MyLocals } from "../models/global.types";
 import {
   ArchivePostInput,
+  CommentPostInput,
   CreatePostInput,
   GetPostInput,
   GetUserPostInput,
@@ -10,6 +11,7 @@ import {
 } from "../schemas/post.schema";
 import {
   archivePostSvc,
+  commentOnPostSvc,
   createPostSvc,
   getPostFeedService,
   getPostsByUserId,
@@ -157,6 +159,23 @@ export const likePostHandler = async (
   const { _id: userId } = res.locals.user;
 
   const results = await likePostSvc(postId, userId);
+  if (results.status !== 200) return res.status(results.status).send(results);
+
+  return res.send(results);
+};
+
+/*Comment on post handler*/
+
+export const commentOnPostHandler = async (
+  req: Request<CommentPostInput["params"], {}, CommentPostInput["body"]>,
+  res: Response<any, MyLocals>
+) => {
+  const { id: postId } = req.params;
+  const { _id: userId } = res.locals.user;
+  const { text } = req.body;
+
+  const results = await commentOnPostSvc(text, postId, userId);
+
   if (results.status !== 200) return res.status(results.status).send(results);
 
   return res.send(results);

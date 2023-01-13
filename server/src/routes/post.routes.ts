@@ -1,6 +1,7 @@
 import express from "express";
 import {
   archivePostHandler,
+  commentOnPostHandler,
   createPostHandler,
   deletePostHandler,
   getPostFeedHandler,
@@ -84,11 +85,11 @@ postRoutes.post(
 );
 
 // Comment Post
-// postRoutes.post(
-//   "/:id/comment",
-//   requireUser,
-//   validateResource(commentPostSchema),
-//   commentPostHandler
-// );
+postRoutes.post(
+  "/:id/comment",
+  requireUser,
+  validateResource(commentPostSchema),
+  commentOnPostHandler
+);
 
 export default postRoutes;

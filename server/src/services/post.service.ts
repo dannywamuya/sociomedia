@@ -164,3 +164,22 @@ export const likePostSvc = async (postId: string, userId: string) => {
     return { status: 500, message: e.message };
   }
 };
+
+export const commentOnPostSvc = async (
+  text: string,
+  postId: string,
+  userId: string
+) => {
+  try {
+    const post = await PostModel.findById(postId);
+
+    if (!post) return { status: 404, message: "Could not find post." };
+
+    post.comments.push({ userId, text });
+    post.save();
+
+    return { status: 200, message: "Comment posted successfully" };
+  } catch (e: any) {
+    return { status: 500, message: e.message };
+  }
+};
