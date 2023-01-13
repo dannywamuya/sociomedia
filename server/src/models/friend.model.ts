@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { IImage } from "./image.model";
 
 export interface IFriend {
   firstName: string;
@@ -24,6 +23,6 @@ export const friendSchema = new mongoose.Schema({
   location: { type: String },
 });
 
-const FriendModel = mongoose.model<IFriend>("Friend", friendSchema);
+// const FriendModel = mongoose.model<IFriend>("Friend", friendSchema);
 
-export default FriendModel;
+// export default FriendModel;
