@@ -5,7 +5,27 @@ export const privatePostFields = ["__v", "archived"];
 interface IComment {
   userId: string;
   text: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
+
+const commentSchema = new mongoose.Schema(
+  {
+    userId: {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: "User",
+      required: true,
+      immutable: true,
+    },
+    text: {
+      type: String,
+      required: true,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
 export interface IPost {
   userId: string;
@@ -59,7 +79,7 @@ const postSchema = new mongoose.Schema(
       ref: "User",
     },
     comments: {
-      type: mongoose.SchemaTypes.Array,
+      type: [commentSchema],
     },
     archived: {
       type: Boolean,
