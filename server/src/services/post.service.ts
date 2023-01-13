@@ -112,3 +112,19 @@ export const archivePostSvc = async (id: string, userId: string) => {
     return { status: 500, message: e.message };
   }
 };
+
+export const getPostFeedService = async () => {
+  try {
+    const posts = await PostModel.find(
+      {},
+      [...privatePostFields.map((v) => `-${v}`)],
+      {
+        sort: { createdAt: -1 },
+      }
+    );
+
+    return { status: 200, posts };
+  } catch (e: any) {
+    return { status: 500, message: e.message };
+  }
+};

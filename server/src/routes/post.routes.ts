@@ -3,6 +3,7 @@ import {
   archivePostHandler,
   createPostHandler,
   deletePostHandler,
+  getPostFeedHandler,
   getPostHandler,
   updatePostHandler,
   // uploadImagesHandler,
@@ -58,8 +59,8 @@ postRoutes.delete(
 // Archive a post
 postRoutes.patch("/:id/archive", requireUser, archivePostHandler);
 
-// // Get Post Feed
-// postRoutes.get("/", requireUser, getPostFeed);
+// Get Post Feed
+postRoutes.get("/", requireUser, getPostFeedHandler);
 
 // // Get Users Posts
 // postRoutes.get("/:id/userPosts", requireUser, getUsersPosts);

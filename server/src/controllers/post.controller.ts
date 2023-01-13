@@ -9,6 +9,7 @@ import {
 import {
   archivePostSvc,
   createPostSvc,
+  getPostFeedService,
   getSinglePostSvc,
   updatePostImages,
   updatePostSvc,
@@ -115,4 +116,17 @@ export const archivePostHandler = async (
   const archived = await archivePostSvc(id, userId);
 
   return res.status(archived.status).send(archived);
+};
+
+/* Get post feed, should return posts in reverse chronological order limiting to 10 posts */
+// TODO: Implement pagination globally for such requests
+export const getPostFeedHandler = async (
+  req: Request,
+  res: Response<any, MyLocals>
+) => {
+  const results = await getPostFeedService();
+
+  if (results.status !== 200) res.status(results.status).send(results);
+
+  return res.send(results.posts);
 };
