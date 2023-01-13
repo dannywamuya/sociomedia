@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 
+export const privatePostFields = ["__v", "archived"];
+
 interface IComment {
   userId: string;
   text: string;
