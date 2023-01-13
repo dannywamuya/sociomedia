@@ -65,7 +65,7 @@ export const commentPostSchema = object({
   body: object({
     text: string({
       required_error: "Comment is required",
-    }),
+    }).max(140, "You have exceeded the maximum character limit per comment."),
   }),
   params: object({
     id: string({
