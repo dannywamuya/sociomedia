@@ -9,7 +9,11 @@ export const createPostSchema = object({
 });
 
 export const getPostSchema = object({
-  body: object({}),
+  params: object({
+    id: string({
+      required_error: "Post ID is required",
+    }),
+  }),
 });
 
 export const updatePostSchema = object({
