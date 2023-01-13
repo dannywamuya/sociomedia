@@ -73,7 +73,7 @@ const postSchema = new mongoose.Schema(
 
 postSchema.pre("save", function (next) {
   if (this.picturePaths.length > 10) {
-    return next(new Error("Too many images per post, maximum is 10"));
+    return next(new Error("Too many images per post, maximum is 4"));
   }
   next();
 });
