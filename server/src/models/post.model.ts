@@ -5,8 +5,8 @@ export const privatePostFields = ["__v", "archived"];
 interface IComment {
   userId: string;
   text: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 const commentSchema = new mongoose.Schema(
