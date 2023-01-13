@@ -183,3 +183,20 @@ export const commentOnPostSvc = async (
     return { status: 500, message: e.message };
   }
 };
+
+export const deletePostSvc = async (postId: string, userId: string) => {
+  try {
+    const post = await PostModel.findById(postId);
+
+    if (!post) return { status: 404, message: "Could not find post." };
+    if (String(post.userId) !== userId) {
+      return { status: 403, message: "Could not delete post." };
+    }
+
+    post.delete();
+
+    return { status: 200, message: "Post deleted successfully" };
+  } catch (e: any) {
+    return { status: 500, message: e.message };
+  }
+};

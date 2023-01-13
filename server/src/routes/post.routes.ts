@@ -62,8 +62,8 @@ postRoutes.patch(
 // Delete a post
 postRoutes.delete(
   "/:id",
-  validateResource(deletePostSchema),
   requireUser,
+  validateResource(deletePostSchema),
   deletePostHandler
 );
 

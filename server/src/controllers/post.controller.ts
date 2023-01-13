@@ -4,6 +4,7 @@ import {
   ArchivePostInput,
   CommentPostInput,
   CreatePostInput,
+  DeletePostInput,
   GetPostInput,
   GetUserPostInput,
   LikePostInput,
@@ -13,6 +14,7 @@ import {
   archivePostSvc,
   commentOnPostSvc,
   createPostSvc,
+  deletePostSvc,
   getPostFeedService,
   getPostsByUserId,
   getSinglePostSvc,
@@ -97,7 +99,19 @@ export const updatePostHandler = async (
 };
 
 /* Delete post and/or images from a post, image model, cloud storage*/
-export const deletePostHandler = (req: Request, res: Response) => {};
+export const deletePostHandler = async (
+  req: Request<DeletePostInput["params"]>,
+  res: Response<any, MyLocals>
+) => {
+  const { id: postId } = req.params;
+  const { _id: userId } = res.locals.user;
+
+  const results = await deletePostSvc(postId, userId);
+
+  if (results.status !== 200) return res.status(results.status).send(results);
+
+  return res.send(results);
+};
 
 /* Delete images from a post, image model, cloud storage*/
 export const deletePostImageHandler = (req: Request, res: Response) => {};
