@@ -1,6 +1,5 @@
 import jwt from "jsonwebtoken";
 import config from "config";
-import logger from "./logger";
 
 export type PrivateKeyName = "accessTokenPrivateKey" | "refreshTokenPrivateKey";
 export type PublicKeyName = "accessTokenPublicKey" | "refreshTokenPublicKey";
@@ -33,7 +32,6 @@ export const verifyJwt = <T>(
   try {
     return jwt.verify(token, signingKey) as T;
   } catch (e: any) {
-    logger.error(e.message);
     return null;
   }
 };
