@@ -44,7 +44,12 @@ postRoutes.post(
 // );
 
 // Get one post
-postRoutes.get("/:id", validateResource(getPostSchema), getPostHandler);
+postRoutes.get(
+  "/:id",
+  requireUser,
+  validateResource(getPostSchema),
+  getPostHandler
+);
 
 // Update a post
 postRoutes.patch(
