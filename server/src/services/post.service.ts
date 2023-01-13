@@ -147,7 +147,7 @@ export const getPostsByUserId = async (userId: string) => {
 
 export const likePostSvc = async (postId: string, userId: string) => {
   try {
-    const post = await PostModel.findById({ _id: postId });
+    const post = await PostModel.findById(postId);
 
     if (!post) return { status: 404, message: "Could not find post." };
 
