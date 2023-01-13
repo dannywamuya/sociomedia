@@ -1,5 +1,5 @@
 import ImageModel from "../models/image.model";
-import PostModel from "../models/post.model";
+import PostModel, { privatePostFields } from "../models/post.model";
 import { IUser } from "../models/user.model";
 import { CreatePostInput, UpdatePostInput } from "../schemas/post.schema";
 
@@ -61,7 +61,9 @@ export const updatePostImages = async (
   userId: string
 ) => {
   try {
-    const post = await PostModel.findById(postId);
+    const post = await PostModel.findById(postId, [
+      ...privatePostFields.map((v) => `-${v}`),
+    ]);
 
     if (!post || String(post.userId) !== userId) {
       return "Could not update post";
@@ -69,8 +71,27 @@ export const updatePostImages = async (
 
     post.picturePaths = picturePaths;
     post.save();
+
     return post;
   } catch (e: any) {
-    return e.message;
+    return { status: 500, message: e.message };
+  }
+};
+
+export const getSinglePostSvc = async (postId: string) => {
+  try {
+    const post = await PostModel.findById(postId, [
+      ...privatePostFields.map((v) => `-${v}`),
+    ]);
+
+    if (!post) return { status: 404, message: "Could not find post." };
+
+    if (post.archived) {
+      return { status: 404, message: "Post has been archived" };
+    }
+
+    return { status: 200, post };
+  } catch (e: any) {
+    return { status: 500, message: e.message };
   }
 };
