@@ -4,12 +4,14 @@ import {
   ArchivePostInput,
   CreatePostInput,
   GetPostInput,
+  GetUserPostInput,
   UpdatePostInput,
 } from "../schemas/post.schema";
 import {
   archivePostSvc,
   createPostSvc,
   getPostFeedService,
+  getPostsByUserId,
   getSinglePostSvc,
   updatePostImages,
   updatePostSvc,
@@ -125,6 +127,19 @@ export const getPostFeedHandler = async (
   res: Response<any, MyLocals>
 ) => {
   const results = await getPostFeedService();
+
+  if (results.status !== 200) res.status(results.status).send(results);
+
+  return res.send(results.posts);
+};
+
+/* Get posts created by a specific user*/
+export const getUserPostsHandler = async (
+  req: Request<GetUserPostInput["params"]>,
+  res: Response<any, MyLocals>
+) => {
+  const { id } = req.params;
+  const results = await getPostsByUserId(id);
 
   if (results.status !== 200) res.status(results.status).send(results);
 

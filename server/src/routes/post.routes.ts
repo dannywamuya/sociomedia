@@ -5,6 +5,7 @@ import {
   deletePostHandler,
   getPostFeedHandler,
   getPostHandler,
+  getUserPostsHandler,
   updatePostHandler,
   // uploadImagesHandler,
 } from "../controllers/post.controller";
@@ -15,6 +16,7 @@ import {
   createPostSchema,
   deletePostSchema,
   getPostSchema,
+  getUserPostsSchema,
   updatePostSchema,
 } from "../schemas/post.schema";
 
@@ -62,7 +64,12 @@ postRoutes.patch("/:id/archive", requireUser, archivePostHandler);
 // Get Post Feed
 postRoutes.get("/", requireUser, getPostFeedHandler);
 
-// // Get Users Posts
-// postRoutes.get("/:id/userPosts", requireUser, getUsersPosts);
+// Get Users Posts
+postRoutes.get(
+  "/:id/userPosts",
+  validateResource(getUserPostsSchema),
+  requireUser,
+  getUserPostsHandler
+);
 
 export default postRoutes;

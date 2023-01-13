@@ -128,3 +128,19 @@ export const getPostFeedService = async () => {
     return { status: 500, message: e.message };
   }
 };
+
+export const getPostsByUserId = async (userId: string) => {
+  try {
+    const posts = await PostModel.find(
+      { userId },
+      [...privatePostFields.map((v) => `-${v}`)],
+      {
+        sort: { createdAt: -1 },
+      }
+    );
+
+    return { status: 200, posts };
+  } catch (e: any) {
+    return { status: 500, message: e.message };
+  }
+};
