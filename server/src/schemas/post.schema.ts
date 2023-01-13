@@ -30,13 +30,25 @@ export const updatePostSchema = object({
 });
 
 export const deletePostSchema = object({
-  body: object({}),
+  params: object({
+    id: string({
+      required_error: "Post ID is required",
+    }),
+  }),
 });
 
 export const archivePostSchema = object({
   params: object({
     id: string({
       required_error: "Post ID is required",
+    }),
+  }),
+});
+
+export const getUserPostsSchema = object({
+  params: object({
+    id: string({
+      required_error: "User ID is required",
     }),
   }),
 });
@@ -50,3 +62,5 @@ export type UpdatePostInput = TypeOf<typeof updatePostSchema>;
 export type DeletePostInput = TypeOf<typeof deletePostSchema>;
 
 export type ArchivePostInput = TypeOf<typeof archivePostSchema>;
+
+export type GetUserPostInput = TypeOf<typeof getUserPostsSchema>;
