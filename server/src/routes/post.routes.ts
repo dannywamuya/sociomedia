@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  archivePostHandler,
   createPostHandler,
   deletePostHandler,
   getPostHandler,
@@ -18,6 +19,7 @@ import {
 
 const postRoutes = express.Router();
 
+// Create post and upload images
 postRoutes.post(
   "/",
   requireUser,
@@ -26,6 +28,7 @@ postRoutes.post(
   createPostHandler
 );
 
+// Upload multiple images
 // postRoutes.post(
 //   "/upload-multiple-images",
 //   requireUser,
@@ -33,8 +36,10 @@ postRoutes.post(
 //   uploadImagesHandler
 // );
 
+// Get one post
 postRoutes.get("/:id", validateResource(getPostSchema), getPostHandler);
 
+// Update a post
 postRoutes.patch(
   "/:id",
   requireUser,
@@ -42,11 +47,21 @@ postRoutes.patch(
   updatePostHandler
 );
 
+// Delete a post
 postRoutes.delete(
-  "/:id/delete",
+  "/:id",
   requireUser,
   validateResource(deletePostSchema),
   deletePostHandler
 );
+
+// Archive a post
+postRoutes.patch("/:id/archive", requireUser, archivePostHandler);
+
+// // Get Post Feed
+// postRoutes.get("/", requireUser, getPostFeed);
+
+// // Get Users Posts
+// postRoutes.get("/:id/userPosts", requireUser, getUsersPosts);
 
 export default postRoutes;

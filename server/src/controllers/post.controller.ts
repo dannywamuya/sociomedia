@@ -1,11 +1,13 @@
 import { Request, Response } from "express";
 import { IPostImages, MyLocals } from "../models/global.types";
 import {
+  ArchivePostInput,
   CreatePostInput,
   GetPostInput,
   UpdatePostInput,
 } from "../schemas/post.schema";
 import {
+  archivePostSvc,
   createPostSvc,
   getSinglePostSvc,
   updatePostImages,
@@ -93,6 +95,7 @@ export const deletePostHandler = (req: Request, res: Response) => {};
 /* Delete images from a post, image model, cloud storage*/
 export const deletePostImageHandler = (req: Request, res: Response) => {};
 
+/* Upload multiple images handler */
 // export const uploadImagesHandler = async (req: Request, res: Response) => {
 //   const files: any = req?.files;
 
@@ -100,3 +103,16 @@ export const deletePostImageHandler = (req: Request, res: Response) => {};
 
 //   return res.send(await uploadMultipleImagesSvc(files, "test-post-id"));
 // };
+
+/* Archive a post, checks that the user who made the request also created the post*/
+export const archivePostHandler = async (
+  req: Request<ArchivePostInput["params"]>,
+  res: Response<any, MyLocals>
+) => {
+  const { id } = req.params;
+  const userId = res.locals.user._id;
+
+  const archived = await archivePostSvc(id, userId);
+
+  return res.status(archived.status).send(archived);
+};

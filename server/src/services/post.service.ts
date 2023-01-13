@@ -95,3 +95,20 @@ export const getSinglePostSvc = async (postId: string) => {
     return { status: 500, message: e.message };
   }
 };
+
+export const archivePostSvc = async (id: string, userId: string) => {
+  try {
+    const post = await PostModel.findById(id);
+    if (!post) return { status: 404, message: "Could not find post." };
+
+    if (String(post.userId) !== userId) {
+      return { status: 403, message: "Could not archive post" };
+    }
+
+    post.archived = !post.archived;
+    post.save();
+    return { status: 200, message: { archived: post.archived } };
+  } catch (e: any) {
+    return { status: 500, message: e.message };
+  }
+};

@@ -33,6 +33,14 @@ export const deletePostSchema = object({
   body: object({}),
 });
 
+export const archivePostSchema = object({
+  params: object({
+    id: string({
+      required_error: "Post ID is required",
+    }),
+  }),
+});
+
 export type CreatePostInput = TypeOf<typeof createPostSchema>;
 
 export type GetPostInput = TypeOf<typeof getPostSchema>;
@@ -40,3 +48,5 @@ export type GetPostInput = TypeOf<typeof getPostSchema>;
 export type UpdatePostInput = TypeOf<typeof updatePostSchema>;
 
 export type DeletePostInput = TypeOf<typeof deletePostSchema>;
+
+export type ArchivePostInput = TypeOf<typeof archivePostSchema>;
