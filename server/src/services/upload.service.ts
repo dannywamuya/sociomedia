@@ -117,7 +117,8 @@ export const uploadMultipleImagesSvc = async (
               reject(result);
             }
 
-            await savePostImagesSvc(userId, postId, result.url);
+            // Let this function run async as we don't neet to send the result back to the client
+            savePostImagesSvc(userId, postId, result.url);
           });
 
           blobStream.on("error", (err) => {
