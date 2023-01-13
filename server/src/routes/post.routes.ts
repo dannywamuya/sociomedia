@@ -42,7 +42,7 @@ postRoutes.patch(
   updatePostHandler
 );
 
-postRoutes.patch(
+postRoutes.delete(
   "/:id/delete",
   requireUser,
   validateResource(deletePostSchema),
