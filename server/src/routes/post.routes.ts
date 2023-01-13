@@ -53,8 +53,8 @@ postRoutes.patch(
 // Delete a post
 postRoutes.delete(
   "/:id",
-  requireUser,
   validateResource(deletePostSchema),
+  requireUser,
   deletePostHandler
 );
 
@@ -67,8 +67,8 @@ postRoutes.get("/", requireUser, getPostFeedHandler);
 // Get Users Posts
 postRoutes.get(
   "/:id/userPosts",
-  validateResource(getUserPostsSchema),
   requireUser,
+  validateResource(getUserPostsSchema),
   getUserPostsHandler
 );
 
