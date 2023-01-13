@@ -16,14 +16,11 @@ export const createUser = async (input: Partial<IUser>) => {
 };
 
 export const findUserById = async (id: string, options?: IFindUserOptions) => {
-  if (options) {
-    const { hidePrivateFields } = options;
-    if (hidePrivateFields) {
-      return await UserModel.findById(id, [
-        ...privateUserFields.map((v) => `-${v}`),
-        "-friends",
-      ]);
-    }
+  if (options && options.hidePrivateFields) {
+    return await UserModel.findById(id, [
+      ...privateUserFields.map((v) => `-${v}`),
+      "-friends",
+    ]);
   }
   return await UserModel.findById(id);
 };
