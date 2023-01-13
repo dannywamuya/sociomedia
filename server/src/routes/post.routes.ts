@@ -97,4 +97,7 @@ postRoutes.post(
   commentOnPostHandler
 );
 
+// TODO: Implement a handler to delete images for a post
+// Delete Post Image
+
 export default postRoutes;
