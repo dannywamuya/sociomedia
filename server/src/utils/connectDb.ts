@@ -3,6 +3,7 @@ import config from "config";
 import logger from "./logger";
 
 const dbUri = config.get<string>("dbUri");
+mongoose.set("strictQuery", false);
 
 const connectDB = async () => {
   try {
