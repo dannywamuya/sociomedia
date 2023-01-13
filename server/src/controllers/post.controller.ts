@@ -1,13 +1,22 @@
 import { Request, Response } from "express";
 import { IPostImages, MyLocals } from "../models/global.types";
-import { CreatePostInput, UpdatePostInput } from "../schemas/post.schema";
+import {
+  CreatePostInput,
+  GetPostInput,
+  UpdatePostInput,
+} from "../schemas/post.schema";
 import {
   createPostSvc,
+  getSinglePostSvc,
   updatePostImages,
   updatePostSvc,
 } from "../services/post.service";
 import { uploadMultipleImagesSvc } from "../services/upload.service";
 
+/* Upload a post and image/images. 
+  Saves the post and images to DB after uploading any 
+  images to cloud storage
+*/
 export const createPostHandler = async (
   req: Request<{}, {}, CreatePostInput["body"]>,
   res: Response<any, MyLocals>
@@ -54,8 +63,20 @@ export const createPostHandler = async (
   return res.send(response);
 };
 
-export const getPostHandler = (req: Request, res: Response) => {};
+/* Get a single post */
+export const getPostHandler = async (
+  req: Request<GetPostInput["params"]>,
+  res: Response<any, MyLocals>
+) => {
+  const { id } = req.params;
+  const result = await getSinglePostSvc(id);
 
+  if (result.status !== 200) return res.status(result.status).send(result);
+
+  return res.send(result.post);
+};
+
+/* Update the post description */
 export const updatePostHandler = async (
   req: Request<UpdatePostInput["params"], {}, UpdatePostInput["body"]>,
   res: Response
@@ -66,7 +87,11 @@ export const updatePostHandler = async (
   return res.send(post);
 };
 
+/* Delete post and/or images from a post, image model, cloud storage*/
 export const deletePostHandler = (req: Request, res: Response) => {};
+
+/* Delete images from a post, image model, cloud storage*/
+export const deletePostImageHandler = (req: Request, res: Response) => {};
 
 // export const uploadImagesHandler = async (req: Request, res: Response) => {
 //   const files: any = req?.files;
