@@ -22,14 +22,18 @@ const postSchema = new mongoose.Schema({
   userId: {
     type: mongoose.SchemaTypes.ObjectId,
     ref: "User",
+    required: true,
+    immutable: true,
   },
   firstName: {
     type: String,
     required: true,
+    immutable: true,
   },
   lastName: {
     type: String,
     required: true,
+    immutable: true,
   },
   description: {
     type: String,
@@ -43,8 +47,7 @@ const postSchema = new mongoose.Schema({
     ref: "Image",
   },
   picturePaths: {
-    type: [mongoose.SchemaTypes.ObjectId],
-    ref: "Image",
+    type: [String],
   },
   likes: {
     type: [mongoose.SchemaTypes.Array],
