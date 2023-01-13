@@ -18,51 +18,58 @@ export interface IPost {
   likes: string[];
   comments: IComment[];
   archived: boolean;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
-const postSchema = new mongoose.Schema({
-  userId: {
-    type: mongoose.SchemaTypes.ObjectId,
-    ref: "User",
-    required: true,
-    immutable: true,
+const postSchema = new mongoose.Schema(
+  {
+    userId: {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: "User",
+      required: true,
+      immutable: true,
+    },
+    firstName: {
+      type: String,
+      required: true,
+      immutable: true,
+    },
+    lastName: {
+      type: String,
+      required: true,
+      immutable: true,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    location: {
+      type: String,
+    },
+    userPicturePath: {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: "Image",
+    },
+    picturePaths: {
+      type: [String],
+    },
+    likes: {
+      type: [mongoose.SchemaTypes.Array],
+      ref: "User",
+    },
+    comments: {
+      type: mongoose.SchemaTypes.Array,
+    },
+    archived: {
+      type: Boolean,
+      default: false,
+    },
   },
-  firstName: {
-    type: String,
-    required: true,
-    immutable: true,
-  },
-  lastName: {
-    type: String,
-    required: true,
-    immutable: true,
-  },
-  description: {
-    type: String,
-    required: true,
-  },
-  location: {
-    type: String,
-  },
-  userPicturePath: {
-    type: mongoose.SchemaTypes.ObjectId,
-    ref: "Image",
-  },
-  picturePaths: {
-    type: [String],
-  },
-  likes: {
-    type: [mongoose.SchemaTypes.Array],
-    ref: "User",
-  },
-  comments: {
-    type: mongoose.SchemaTypes.Array,
-  },
-  archived: {
-    type: Boolean,
-    default: false,
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 
 postSchema.pre("save", function (next) {
   if (this.picturePaths.length > 10) {
