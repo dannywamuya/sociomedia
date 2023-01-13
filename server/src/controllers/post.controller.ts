@@ -5,6 +5,7 @@ import {
   CreatePostInput,
   GetPostInput,
   GetUserPostInput,
+  LikePostInput,
   UpdatePostInput,
 } from "../schemas/post.schema";
 import {
@@ -13,6 +14,7 @@ import {
   getPostFeedService,
   getPostsByUserId,
   getSinglePostSvc,
+  likePostSvc,
   updatePostImages,
   updatePostSvc,
 } from "../services/post.service";
@@ -128,7 +130,7 @@ export const getPostFeedHandler = async (
 ) => {
   const results = await getPostFeedService();
 
-  if (results.status !== 200) res.status(results.status).send(results);
+  if (results.status !== 200) return res.status(results.status).send(results);
 
   return res.send(results.posts);
 };
@@ -141,7 +143,21 @@ export const getUserPostsHandler = async (
   const { id } = req.params;
   const results = await getPostsByUserId(id);
 
-  if (results.status !== 200) res.status(results.status).send(results);
+  if (results.status !== 200) return res.status(results.status).send(results);
 
   return res.send(results.posts);
+};
+
+/*Like post handler */
+export const likePostHandler = async (
+  req: Request<LikePostInput["params"]>,
+  res: Response<any, MyLocals>
+) => {
+  const { id: postId } = req.params;
+  const { _id: userId } = res.locals.user;
+
+  const results = await likePostSvc(postId, userId);
+  if (results.status !== 200) return res.status(results.status).send(results);
+
+  return res.send(results);
 };

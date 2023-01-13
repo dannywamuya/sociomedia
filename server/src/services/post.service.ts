@@ -144,3 +144,23 @@ export const getPostsByUserId = async (userId: string) => {
     return { status: 500, message: e.message };
   }
 };
+
+export const likePostSvc = async (postId: string, userId: string) => {
+  try {
+    const post = await PostModel.findById({ _id: postId });
+
+    if (!post) return { status: 404, message: "Could not find post." };
+
+    const likes = new Set(post.likes.map((v) => String(v)));
+    const liked = likes.has(userId);
+
+    liked ? likes.delete(userId) : likes.add(userId);
+
+    post.likes = [...likes];
+    post.save();
+
+    return { status: 200, liked: !liked };
+  } catch (e: any) {
+    return { status: 500, message: e.message };
+  }
+};

@@ -6,6 +6,7 @@ import {
   getPostFeedHandler,
   getPostHandler,
   getUserPostsHandler,
+  likePostHandler,
   updatePostHandler,
   // uploadImagesHandler,
 } from "../controllers/post.controller";
@@ -13,10 +14,12 @@ import { uploadImagesMiddleWare } from "../middleware/fileUpload";
 import requireUser from "../middleware/requireUser";
 import validateResource from "../middleware/validateResource";
 import {
+  commentPostSchema,
   createPostSchema,
   deletePostSchema,
   getPostSchema,
   getUserPostsSchema,
+  likePostSchema,
   updatePostSchema,
 } from "../schemas/post.schema";
 
@@ -71,5 +74,21 @@ postRoutes.get(
   validateResource(getUserPostsSchema),
   getUserPostsHandler
 );
+
+// Like Post
+postRoutes.post(
+  "/:id/like",
+  requireUser,
+  validateResource(likePostSchema),
+  likePostHandler
+);
+
+// Comment Post
+// postRoutes.post(
+//   "/:id/comment",
+//   requireUser,
+//   validateResource(commentPostSchema),
+//   commentPostHandler
+// );
 
 export default postRoutes;

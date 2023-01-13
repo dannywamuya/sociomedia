@@ -53,6 +53,27 @@ export const getUserPostsSchema = object({
   }),
 });
 
+export const likePostSchema = object({
+  params: object({
+    id: string({
+      required_error: "Post ID is required",
+    }),
+  }),
+});
+
+export const commentPostSchema = object({
+  body: object({
+    text: string({
+      required_error: "Comment is required",
+    }),
+  }),
+  params: object({
+    id: string({
+      required_error: "Post ID is required",
+    }),
+  }),
+});
+
 export type CreatePostInput = TypeOf<typeof createPostSchema>;
 
 export type GetPostInput = TypeOf<typeof getPostSchema>;
@@ -64,3 +85,7 @@ export type DeletePostInput = TypeOf<typeof deletePostSchema>;
 export type ArchivePostInput = TypeOf<typeof archivePostSchema>;
 
 export type GetUserPostInput = TypeOf<typeof getUserPostsSchema>;
+
+export type LikePostInput = TypeOf<typeof likePostSchema>;
+
+export type CommentPostInput = TypeOf<typeof commentPostSchema>;
