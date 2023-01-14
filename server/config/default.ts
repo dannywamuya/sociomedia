@@ -1,6 +1,9 @@
 export default {
   port: 3000,
-  dbUri: "mongodb://localhost:27017/sociomedia",
+  dbUri:
+    process.env.NODE_ENV === "development"
+      ? "mongodb://localhost:27017/sociomedia"
+      : process.env.DB_URI,
   saltWorkFactor: 10,
   smtp: {
     user: "h5uvprxuv247zcm3@ethereal.email",
