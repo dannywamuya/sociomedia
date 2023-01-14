@@ -5,7 +5,7 @@ import postRoutes from "./post.routes";
 
 const router = express.Router();
 
-router.get("/api/health", (_, res) => {
+router.get("/health", (_, res) => {
   return res.sendStatus(200);
 });
 
