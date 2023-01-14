@@ -63,7 +63,10 @@ const userSchema = new mongoose.Schema(
     },
     verified: {
       type: Boolean,
-      default: false,
+      // In production, this should be false so as to verify user of real email addresses.
+      // In this case, we have to do this because we haven't set up an SMTP server for our email
+      // and can therefore not verify users or reset passwords.
+      default: true,
     },
     profileViews: { type: Number },
     impressions: { type: Number },
