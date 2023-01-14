@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
     "build": "tsc",
-    "start": "node /build/src/app.js"
+    "start": "node ./build/src/app.js"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
