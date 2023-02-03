@@ -11,7 +11,9 @@ const app = express();
 
 app.use(
   cors({
-    origin: process.env.ORIGIN_URL,
+    origin: process.env.development
+      ? "http://localhost:5173"
+      : process.env.ORIGIN_URL,
   })
 );
 app.use(express.json());
