@@ -128,13 +128,13 @@ function renderFields([name, fieldProps]: [string, Field]) {
   return <div>Unknown type</div>;
 }
 
-export function Form({ fields, onSubmit, styling = {} }: FormProps) {
+export function Form({ fields, onSubmit, styling = {}, children }: FormProps) {
   const form = useForm();
 
-  const { fieldsPerColumn } = styling;
+  const { fieldsPerColumn, submitText, formTitle } = styling;
 
   return (
-    <Flex p={"2"}>
+    <Flex>
       <FormProvider {...form}>
         <Flex
           p={"4"}
@@ -142,12 +142,12 @@ export function Form({ fields, onSubmit, styling = {} }: FormProps) {
           border={"1px"}
           borderColor={"lightgray"}
           direction={"column"}
-          w={"full"}
+          minW={"500px"}
           overflow={"auto"}
           boxShadow="0 0 25px rgba(0, 0, 0, 0.274)"
         >
           <Heading size={"md"} mb={"4"}>
-            Form
+            {formTitle ?? "Form"}
           </Heading>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <Grid
@@ -161,9 +161,8 @@ export function Form({ fields, onSubmit, styling = {} }: FormProps) {
               ))}
             </Grid>
 
-            <Button type="submit" my={"2"}>
-              Save
-            </Button>
+            <Flex my={"4"}>{children}</Flex>
+            <Button type="submit">{submitText ?? "Submit"}</Button>
           </form>
         </Flex>
       </FormProvider>

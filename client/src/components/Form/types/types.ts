@@ -50,5 +50,8 @@ export interface FormProps {
   onSubmit: SubmitHandler<FieldValues>;
   styling?: {
     fieldsPerColumn?: number;
+    submitText?: string;
+    formTitle?: string;
   };
+  children?: any;
 }
